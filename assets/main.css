@@ -1,0 +1,61 @@
+html {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.card-container {
+  padding: 0.5em;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 100%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  margin: 0.5em;
+}
+
+.card__content {
+  margin: 1em;
+}
+
+.card img {
+  margin: auto;
+  max-height: 15rem;
+}
+
+.card h1 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 1.6rem;
+  margin: 0.5em 0;
+}
+
+input {
+  width: 100%;
+}
+
+@media screen and (min-width: 36rem) {
+  .card {
+    width: calc(50% - 1rem);
+  }
+}
+
+@media screen and (min-width: 54rem) {
+  .card {
+    width: calc(33.333% - 1rem);
+  }
+}
+
+@media screen and (min-width: 72rem) {
+  main {
+    margin: auto;
+    width: 60em;
+  }
+
+  .card-container {
+    padding: 0;
+    margin: -0.5em;
+    margin-top: 0.5em;
+  }
+}
