@@ -4,7 +4,7 @@
       :value="inUrl.query"
       class="main-search"
       type="search"
-      @input="updateInUrl({ query: $event.target.value })"
+      @input="updateInUrl({ query: $event.target.value, page: 1 })"
     >
     <div v-if="results.length > 0">
       <Toolbar />

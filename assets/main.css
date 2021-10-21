@@ -88,11 +88,26 @@ select:focus-visible {
 }
 
 .card h1 {
+  text-align: center;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: 1.6rem;
   margin: 0.5em 0;
+}
+
+.card table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.card td {
+  padding: 0.25rem;
+  border: 1px solid #ddd;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 @media screen and (min-width: 36rem) {

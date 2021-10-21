@@ -5,12 +5,12 @@
     </div>
     <div class="card__content">
       <h1>{{ name }}</h1>
-      <ul>
-        <li>Height: {{ height }}</li>
-        <li>Weight: {{ weight }}</li>
-        <li>Abilities: {{ abilities.join(', ') }}</li>
-      </ul>
     </div>
+    <table>
+      <tr><td style="width: 4.2em;">Height</td><td>{{ height }}</td></tr>
+      <tr><td>Weight</td><td>{{ height }}</td></tr>
+      <tr><td>Abilities</td><td>{{ abilities.join(', ') }}</td></tr>
+    </table>
   </article>
 </template>
 
