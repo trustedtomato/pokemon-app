@@ -1,7 +1,7 @@
 <template>
   <article class="card">
     <div class="card__content">
-      <img v-if="hasImage" :src="imageUrl" :alt="name" loading="lazy">
+      <div class="card__image" :style="`background-image: url(${imageUrl || 'question-mark.svg'})`" />
     </div>
     <div class="card__content">
       <h1>{{ name }}</h1>

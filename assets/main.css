@@ -9,6 +9,7 @@ html {
 }
 
 .card {
+  contain: paint style;
   width: 100%;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   margin: 0.5em;
@@ -18,9 +19,11 @@ html {
   margin: 1em;
 }
 
-.card img {
+.card__image {
+  width: 13rem;
+  height: 13rem;
   margin: auto;
-  max-height: 15rem;
+  background-size: contain;
 }
 
 .card h1 {
