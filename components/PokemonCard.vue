@@ -1,7 +1,7 @@
 <template>
   <article class="card">
     <div class="card__content">
-      <img :src="imageUrl" :alt="name">
+      <img v-if="hasImage" :src="imageUrl" :alt="name" loading="lazy">
     </div>
     <div class="card__content">
       <h1>{{ name }}</h1>
@@ -38,11 +38,15 @@ export default Vue.extend({
     abilities: {
       default: () => [],
       type: Array
+    },
+    hasImage: {
+      required: true,
+      type: Boolean
     }
   },
   computed: {
     imageUrl () {
-      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${this.pokemonId}.png`
+      return this.hasImage ? `/generated/pokemon-images/${this.pokemonId}.png` : null
     }
   }
 })

@@ -16,6 +16,7 @@
         :weight="result.item.weight"
         :abilities="result.item.abilities"
         :height="result.item.height"
+        :has-image="result.item.hasImage"
       />
     </div>
   </main>
@@ -34,6 +35,7 @@ interface SimplePokemon {
   height: number
   weight: number
   abilities: string[]
+  hasImage: boolean
 }
 
 export default Vue.extend({
@@ -41,38 +43,8 @@ export default Vue.extend({
     PokemonCard
   },
   async asyncData () {
-    const res = await axios.post('https://beta.pokeapi.co/graphql/v1beta', {
-      operationName: 'search',
-      query: `
-        query search {
-          pokemon_v2_pokemon {
-            height
-            name
-            weight
-            pokemon_v2_pokemonabilities {
-              pokemon_v2_ability {
-                name
-              }
-            }
-            id
-          }
-        }
-      `
-    }) as any
-    const pokemons: SimplePokemon[] = res.data.data.pokemon_v2_pokemon.map(({
-      height,
-      name,
-      weight,
-      // eslint-disable-next-line camelcase
-      pokemon_v2_pokemonabilities,
-      id
-    }: any) => ({
-      height,
-      name: (name.slice(0, 1).toUpperCase() + name.slice(1)).replace(/-/g, ' '),
-      weight,
-      abilities: pokemon_v2_pokemonabilities.map(({ pokemon_v2_ability: { name } }: any) => name),
-      id
-    }))
+    const res = await axios.get('/generated/pokemons.json') as any
+    const pokemons: SimplePokemon[] = res.data
     const fuse = new Fuse(pokemons, {
       keys: ['name', 'abilities']
     })
