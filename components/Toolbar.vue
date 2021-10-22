@@ -12,23 +12,25 @@
         <option v-for="[key, displayedString] in Object.entries(sortOptions)" :key="key" :value="key">{{ displayedString }}</option>
       </select>
     </label>
-    <button :disabled="inUrl.page <= 1" class="page-btn" @click="pageClick(inUrl.page - 1)">
-      Previous
-    </button>
-    <span v-for="(chunk, i) in pageButtonChunks" :key="i">
-      <span v-if="i > 0"> ... </span>
-      <button
-        v-for="n in chunk"
-        :key="n"
-        :class="`page-btn ${inUrl.page === n ? 'page-btn--active' : ''}`"
-        @click="pageClick(n)"
-      >
-        {{ n }}
+    <span>
+      <button :disabled="inUrl.page <= 1" class="page-btn" @click="pageClick(inUrl.page - 1)">
+        Previous
+      </button>
+      <span v-for="(chunk, i) in pageButtonChunks" :key="i">
+        <span v-if="i > 0"> ... </span>
+        <button
+          v-for="n in chunk"
+          :key="n"
+          :class="`page-btn ${inUrl.page === n ? 'page-btn--active' : ''}`"
+          @click="pageClick(n)"
+        >
+          {{ n }}
+        </button>
+      </span>
+      <button :disabled="inUrl.page >= maxPage" class="page-btn" @click="pageClick(inUrl.page + 1)">
+        Next
       </button>
     </span>
-    <button :disabled="inUrl.page >= maxPage" class="page-btn" @click="pageClick(inUrl.page + 1)">
-      Next
-    </button>
   </div>
 </template>
 

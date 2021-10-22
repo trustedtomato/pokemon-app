@@ -55,7 +55,13 @@ a {
 
 /* --- Toolbar section --- */
 .toolbar {
-  margin: 1rem 1rem 1rem 1rem;
+  margin: 1rem;
+  line-height: 2rem;
+}
+
+.toolbar > * {
+  display: block;
+  text-align: center;
 }
 
 select {
@@ -212,6 +218,16 @@ td {
 @media screen and (min-width: 54rem) {
   .card {
     width: calc(33.333% - 1rem);
+  }
+
+  .toolbar {
+    display: flex;
+    line-height: 1rem;
+  }
+
+  .toolbar > * {
+    text-align: left;
+    margin-right: 0.5rem;
   }
 }
 
