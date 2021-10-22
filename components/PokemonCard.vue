@@ -8,7 +8,7 @@
     </div>
     <table>
       <tr><td style="width: 4.2em;">Height</td><td>{{ height }}</td></tr>
-      <tr><td>Weight</td><td>{{ height }}</td></tr>
+      <tr><td>Weight</td><td>{{ weight }}</td></tr>
       <tr><td>Abilities</td><td>{{ abilities.join(', ') }}</td></tr>
     </table>
   </article>

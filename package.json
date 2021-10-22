@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
     "prebuild": "node prebuild/generate-pokemon-list.mjs",
+    "dev": "npm run prebuild && nuxt",
     "build": "npm run prebuild && nuxt build",
     "start": "npm run prebuild && nuxt start",
     "generate": "npm run prebuild && nuxt generate",

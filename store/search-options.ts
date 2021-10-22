@@ -14,6 +14,33 @@ interface SimplePokemon {
   hasImage: boolean
 }
 
+const sortOptions = {
+  'best-match': 'Best match',
+  name: 'Name (A to Z)',
+  'name-rev': 'Name (Z to A)',
+  weight: 'Weight (Lower to higher)',
+  'weight-rev': 'Weight (Higher to lower)',
+  height: 'Height (Lower to higher)',
+  'height-rev': 'Height (Higher to lower)'
+}
+
+const createBasicPokemonFilter = (q: string) => {
+  const qLowerCase = q.toLowerCase()
+  return (pokemon: SimplePokemon) =>
+    pokemon.name.toLowerCase().includes(qLowerCase) ||
+    pokemon.abilities.some(ability => ability.toLowerCase().includes(qLowerCase))
+}
+
+const createSearchBasedOnCompareFunc = (
+  compare: (a: SimplePokemon, b: SimplePokemon) => number,
+  self: SearchOptions
+) =>
+  (q: string) =>
+    self.pokemons
+      .filter(createBasicPokemonFilter(q))
+      .sort(compare)
+      .map(item => ({ item }))
+
 @Module({
   name: 'search-options',
   stateFactory: true,
@@ -24,17 +51,61 @@ interface SimplePokemon {
 export default class SearchOptions extends VuexModule {
   pokemons: SimplePokemon[] = []
   limitOptions = [10, 20, 50]
+  sortOptions = sortOptions
   inUrl = {
     query: '',
     limit: 20,
-    page: 1
+    page: 1,
+    sort: Object.keys(sortOptions)[0] as keyof typeof sortOptions
   }
 
-  get search () {
-    const fuse = new Fuse(this.pokemons, {
-      keys: ['name', 'abilities']
-    })
-    return fuse.search.bind(fuse)
+  get search (): ((q: string) => { item: SimplePokemon }[]) {
+    switch (this.inUrl.sort) {
+      case 'best-match': {
+        const fuse = new Fuse(this.pokemons, {
+          keys: ['name', 'abilities']
+        })
+        return fuse.search.bind(fuse)
+      }
+      case 'name': {
+        return createSearchBasedOnCompareFunc(
+          (a, b) => a.name.localeCompare(b.name),
+          this
+        )
+      }
+      case 'name-rev': {
+        return createSearchBasedOnCompareFunc(
+          (a, b) => b.name.localeCompare(a.name),
+          this
+        )
+      }
+      case 'weight': {
+        return createSearchBasedOnCompareFunc(
+          (a, b) => a.weight - b.weight,
+          this
+        )
+      }
+      case 'weight-rev': {
+        return createSearchBasedOnCompareFunc(
+          (a, b) => b.weight - a.weight,
+          this
+        )
+      }
+      case 'height': {
+        return createSearchBasedOnCompareFunc(
+          (a, b) => a.height - b.height,
+          this
+        )
+      }
+      case 'height-rev': {
+        return createSearchBasedOnCompareFunc(
+          (a, b) => b.height - a.height,
+          this
+        )
+      }
+      default:
+        throw new Error('Unknown sorting key!')
+    }
   }
 
   get results () {
@@ -81,7 +152,6 @@ export default class SearchOptions extends VuexModule {
   @Mutation
   QUERY_STRING_TO_STATE (queryString: string) {
     for (const [key, value] of Object.entries(queryStringToObject(queryString))) {
-      console.log(queryString, key)
       // @ts-ignore
       if (typeof this.inUrl[key] === 'number') {
         // @ts-ignore

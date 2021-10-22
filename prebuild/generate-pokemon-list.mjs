@@ -20,7 +20,7 @@ const res = await axios.post('https://beta.pokeapi.co/graphql/v1beta', {
   operationName: 'search',
   query: `
     query search {
-      pokemon_v2_pokemon {
+      pokemon_v2_pokemon(order_by: {name: asc}) {
         height
         name
         weight

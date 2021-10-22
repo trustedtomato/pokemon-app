@@ -6,25 +6,23 @@
       type="search"
       @input="updateInUrl({ query: $event.target.value, page: 1 })"
     >
-    <div v-if="results.length > 0">
-      <Toolbar />
-      <div class="card-container">
-        <PokemonCard
-          v-for="result in results.slice((inUrl.page - 1) * inUrl.limit, inUrl.page * inUrl.limit)"
-          :key="result.item.id"
-          :pokemon-id="result.item.id"
-          :name="result.item.name"
-          :weight="result.item.weight"
-          :abilities="result.item.abilities"
-          :height="result.item.height"
-          :has-image="result.item.hasImage"
-        />
-      </div>
-      <Toolbar />
+    <Toolbar />
+    <div v-if="results.length > 0" class="card-container">
+      <PokemonCard
+        v-for="result in resultsOnPage"
+        :key="result.item.id"
+        :pokemon-id="result.item.id"
+        :name="result.item.name"
+        :weight="result.item.weight"
+        :abilities="result.item.abilities"
+        :height="result.item.height"
+        :has-image="result.item.hasImage"
+      />
     </div>
     <div v-else style="margin: 1em;">
-      There are no results for this query!
+      <em>There are no results for this query!</em>
     </div>
+    <Toolbar />
   </main>
 </template>
 
@@ -41,7 +39,10 @@ export default Vue.extend({
   },
   computed: {
     ...mapState('search-options', ['limitOptions', 'inUrl']),
-    ...mapGetters('search-options', ['search', 'results', 'maxPage', 'pageChunks', 'queryString'])
+    ...mapGetters('search-options', ['search', 'results', 'maxPage', 'pageChunks', 'queryString']),
+    resultsOnPage () {
+      return this.results.slice((this.inUrl.page - 1) * this.inUrl.limit, this.inUrl.page * this.inUrl.limit)
+    }
   },
   watch: {
     inUrl: {
@@ -52,7 +53,9 @@ export default Vue.extend({
     }
   },
   created () {
+    // @ts-ignore
     this.fetchPokemons()
+    // @ts-ignore
     this.queryStringToState(location.search)
   },
   methods: {
