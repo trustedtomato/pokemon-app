@@ -1,11 +1,14 @@
 <template>
   <main>
-    <input
-      :value="inUrl.query"
-      class="main-search"
-      type="search"
-      @input="updateInUrl({ query: $event.target.value, page: 1 })"
-    >
+    <label class="main-search">
+      <SearchIcon />
+      <input
+        :value="inUrl.query"
+        class="main-search__input"
+        type="search"
+        @input="updateInUrl({ query: $event.target.value, page: 1 })"
+      >
+    </label>
     <Toolbar />
     <div v-if="results.length > 0" class="card-container">
       <PokemonCard
@@ -31,11 +34,13 @@ import Vue from 'vue'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import PokemonCard from '@/components/PokemonCard.vue'
 import Toolbar from '~/components/Toolbar.vue'
+import SearchIcon from '~/components/SearchIcon.vue'
 
 export default Vue.extend({
   components: {
     PokemonCard,
-    Toolbar
+    Toolbar,
+    SearchIcon
   },
   computed: {
     ...mapState('search-options', ['limitOptions', 'inUrl']),

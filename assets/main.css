@@ -4,22 +4,39 @@ html {
 
 /* --- Search bar section --- */
 .main-search {
-  width: 100%;
-  border: 0;
   border-bottom: 1px solid #aaa;
-  font-size: inherit;
-  padding: 0.5em 1em;
+  padding: 0 1rem;
   outline: 0;
+  height: 2rem;
+  display: flex;
+  align-items: center;
 }
 
-.main-search:focus {
+.main-search svg {
+  height: 50%;
+  margin-left: -0.05rem;
+}
+
+.main-search__input {
+  margin-left: 0.5rem;
+  font-size: inherit;
+  height: 100%;
+  border: 0;
+  flex-grow: 1;
+}
+
+.main-search:focus-within {
   border-bottom-color: #c6b31d;
   outline: 1px solid #c6b31d;
 }
 
+.main-search__input:focus-within {
+  outline: 0;
+}
+
 /* --- Toolbar section --- */
 .toolbar {
-  margin: 1em 1em 1em 1em;
+  margin: 1rem 1rem 1rem 1rem;
 }
 
 select {
