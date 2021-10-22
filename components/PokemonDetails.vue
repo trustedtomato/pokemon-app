@@ -1,5 +1,5 @@
 <template>
-  <div v-show="detailedPokemon" id="pokemon-details-modal" class="pokemon-details__container" tabindex="-1" data-micromodal-close>
+  <div id="pokemon-details-modal" class="pokemon-details__container" data-micromodal-close aria-hidden="true">
     <div v-if="detailedPokemon" class="pokemon-details" role="dialog" aria-modal="true" aria-labelledby="Pokemon details">
       <div class="pokemon-details__close">
         <nuxt-link
@@ -96,7 +96,8 @@ export default Vue.extend({
           onClose: () => {
             this.$router.push(this.linkToSearchPage as string)
           },
-          disableScroll: true
+          disableScroll: true,
+          openClass: 'pokemon-details__container--open'
         })
         this.extraData = null
         this.fetchCancelTokenSource.cancel()
