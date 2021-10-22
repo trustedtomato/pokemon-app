@@ -7,6 +7,7 @@ import { queryStringToObject } from '@/utils/query-string-to-object'
 import { range } from '@/utils/range'
 
 interface SimplePokemon {
+  id: number
   name: string
   height: number
   weight: number
@@ -56,7 +57,13 @@ export default class SearchOptions extends VuexModule {
     query: '',
     limit: 20,
     page: 1,
-    sort: Object.keys(sortOptions)[0] as keyof typeof sortOptions
+    sort: Object.keys(sortOptions)[0] as keyof typeof sortOptions,
+    'show-details-of': NaN
+  }
+
+  get detailedPokemon () {
+    return this.pokemons
+      .find(pokemon => pokemon.id === this.inUrl['show-details-of'])
   }
 
   get search (): ((q: string) => { item: SimplePokemon }[]) {
@@ -183,5 +190,13 @@ export default class SearchOptions extends VuexModule {
   @Action({ commit: 'UPDATE_IN_URL', rawError: true })
   updateInUrl (updated: any) {
     return updated
+  }
+
+  get getUpdateInUrlLink () {
+    const url = this.inUrl
+    return (updated: any) => '?' + objectToQueryString({
+      ...url,
+      ...updated
+    })
   }
 }

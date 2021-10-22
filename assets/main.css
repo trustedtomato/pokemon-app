@@ -2,6 +2,24 @@ html {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+select,
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible {
+  outline: 2px solid #c6b31d;
+}
+
+a {
+  color: #494525;
+}
+
 /* --- Search bar section --- */
 .main-search {
   border-bottom: 1px solid #aaa;
@@ -70,10 +88,6 @@ select:focus-visible {
   font-weight: 900;
 }
 
-.page-btn:focus-visible {
-  outline: 2px solid #c6b31d;
-}
-
 .page-btn:disabled {
   opacity: 0.3;
 }
@@ -95,6 +109,12 @@ select:focus-visible {
   height: 24rem;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   margin: 0.5em;
+
+  /* Remove default button styles. */
+  font-size: inherit;
+  padding: 0;
+  border: 0;
+  background: none;
 }
 
 .card__content {
@@ -117,23 +137,73 @@ select:focus-visible {
   margin: 0.5em 0;
 }
 
-.card table {
+table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
 }
 
-.card td {
+td {
   padding: 0.25rem;
   border: 1px solid #ddd;
+  text-align: left;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
+/* --- Pokemon details dialog --- */
+.pokemon-details__container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.pokemon-details {
+  border-radius: 4px;
+  margin: auto;
+  background: white;
+  padding: 1rem;
+  max-width: 40rem;
+  position: relative;
+}
+
+.pokemon-details__close {
+  margin-bottom: 1rem;
+}
+
+.pokemon-details__data {
+  display: flex;
+  flex-direction: column;
+}
+
+.pokemon-details img {
+  max-height: 20rem;
+  margin: auto;
+}
+
+.pokemon-details table {
+  flex-grow: auto;
+}
+
 @media screen and (min-width: 36rem) {
   .card {
     width: calc(50% - 1rem);
+  }
+
+  .pokemon-details__data {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .pokemon-details__image {
+    min-width: 15rem;
+    margin-right: 1rem;
   }
 }
 

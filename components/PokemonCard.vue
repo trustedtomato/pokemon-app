@@ -1,5 +1,5 @@
 <template>
-  <article class="card">
+  <button class="card">
     <div class="card__content">
       <div class="card__image" :style="`background-image: url(${imageUrl || 'question-mark.svg'})`" />
     </div>
@@ -11,7 +11,7 @@
       <tr><td>Weight</td><td>{{ weight }}</td></tr>
       <tr><td>Abilities</td><td>{{ abilities.join(', ') }}</td></tr>
     </table>
-  </article>
+  </button>
 </template>
 
 <script lang="ts">
