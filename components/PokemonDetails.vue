@@ -1,12 +1,12 @@
 <template>
-  <div v-show="detailedPokemon" class="pokemon-details__container">
-    <div v-if="detailedPokemon" class="pokemon-details">
+  <div v-show="detailedPokemon" id="pokemon-details-modal" class="pokemon-details__container" tabindex="-1" data-micromodal-close>
+    <div v-if="detailedPokemon" class="pokemon-details" role="dialog" aria-modal="true" aria-labelledby="Pokemon details">
       <div class="pokemon-details__close">
         <nuxt-link
           class="pokemon-details__close"
-          :to="getLinkForInUrlUpdate({
-            'show-details-of': NaN
-          })"
+          aria-label="Close modal"
+          data-micromodal-close
+          :to="linkToSearchPage"
         >
           ← Go back to search
         </nuxt-link>
@@ -59,6 +59,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
+import MicroModal from 'micromodal'
 import Chart from './Chart'
 
 export default Vue.extend({
@@ -81,12 +82,22 @@ export default Vue.extend({
               data: Object.values(this.extraData.stats)
             }]
           }
+    },
+    linkToSearchPage () {
+      return this.getLinkForInUrlUpdate({
+        'show-details-of': NaN
+      })
     }
   },
   watch: {
     detailedPokemon () {
       if (this.detailedPokemon) {
-        document.body.style.overflow = 'hidden'
+        MicroModal.show('pokemon-details-modal', {
+          onClose: () => {
+            this.$router.push(this.linkToSearchPage as string)
+          },
+          disableScroll: true
+        })
         this.extraData = null
         this.fetchCancelTokenSource.cancel()
         this.fetchCancelTokenSource = axios.CancelToken.source()
@@ -95,8 +106,6 @@ export default Vue.extend({
         }).then((res) => {
           this.extraData = res.data
         })
-      } else {
-        document.body.style.overflow = 'auto'
       }
     }
   }
