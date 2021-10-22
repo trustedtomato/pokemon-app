@@ -72,7 +72,11 @@ export default class SearchOptions extends VuexModule {
         const fuse = new Fuse(this.pokemons, {
           keys: ['name', 'abilities']
         })
-        return fuse.search.bind(fuse)
+        return (q: string) => (
+          q === ''
+            ? this.pokemons.map(item => ({ item }))
+            : fuse.search(q)
+        )
       }
       case 'name': {
         return createSearchBasedOnCompareFunc(
