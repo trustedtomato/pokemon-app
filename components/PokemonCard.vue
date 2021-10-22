@@ -2,7 +2,7 @@
   <button class="card">
     <div class="card__content">
       <div class="card__image">
-        <img :src="`${imageUrl || '/question-mark.svg'}`" :alt="name">
+        <img :src="`${imageUrl}`" :alt="name">
       </div>
     </div>
     <div class="card__content">
@@ -48,7 +48,7 @@ export default Vue.extend({
   },
   computed: {
     imageUrl () {
-      return this.hasImage ? `/generated/pokemon-images/${this.pokemonId}.png` : null
+      return this.hasImage ? `/generated/pokemon-images/${this.pokemonId}.png` : '/question-mark.svg'
     }
   }
 })

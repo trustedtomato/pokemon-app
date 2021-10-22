@@ -165,19 +165,10 @@ export default class SearchOptions extends VuexModule {
 
   @Mutation
   QUERY_STRING_TO_STATE (queryString: string) {
-    for (const [key, value] of Object.entries(queryStringToObject(queryString))) {
-      // @ts-ignore
-      if (typeof this.inUrl[key] === 'number') {
-        // @ts-ignore
-        this.inUrl[key] = Number(value)
-        // @ts-ignore
-      } else if (typeof this.inUrl[key] === 'string') {
-        // @ts-ignore
-        this.inUrl[key] = value
-      } else {
-        console.error(`Could not identify query string key: ${key}`)
-      }
-    }
+    Object.assign(
+      this.inUrl,
+      queryStringToObject(queryString, this.inUrl)
+    )
   }
 
   @Action({ commit: 'QUERY_STRING_TO_STATE', rawError: true })
