@@ -15,7 +15,7 @@
     <button :disabled="inUrl.page <= 1" class="page-btn" @click="pageClick(inUrl.page - 1)">
       Previous
     </button>
-    <span v-for="(chunk, i) in pageChunks" :key="i">
+    <span v-for="(chunk, i) in pageButtonChunks" :key="i">
       <span v-if="i > 0"> ... </span>
       <button
         v-for="n in chunk"
@@ -39,7 +39,7 @@ import { mapGetters, mapState, mapActions } from 'vuex'
 export default Vue.extend({
   computed: {
     ...mapState('search-options', ['limitOptions', 'inUrl', 'sortOptions']),
-    ...mapGetters('search-options', ['search', 'results', 'maxPage', 'pageChunks', 'queryString'])
+    ...mapGetters('search-options', ['search', 'results', 'maxPage', 'pageButtonChunks'])
   },
   methods: {
     ...mapActions('search-options', ['updateInUrl']),

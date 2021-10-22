@@ -4,7 +4,7 @@
       <div class="pokemon-details__close">
         <nuxt-link
           class="pokemon-details__close"
-          :to="getUpdateInUrlLink({
+          :to="getLinkForInUrlUpdate({
             'show-details-of': NaN
           })"
         >
@@ -14,7 +14,7 @@
       <div class="pokemon-details__data">
         <div class="pokemon-details__image">
           <img
-            :src="`/generated/pokemon-images/${detailedPokemon.id}.png`"
+            :src="detailedPokemon.hasImage ? `/generated/pokemon-images/${detailedPokemon.id}.png` : '/question-mark.svg'"
             :alt="detailedPokemon.name"
           >
         </div>
@@ -70,7 +70,7 @@ export default Vue.extend({
     fetchCancelTokenSource: axios.CancelToken.source()
   }),
   computed: {
-    ...mapGetters('search-options', ['detailedPokemon', 'getUpdateInUrlLink']),
+    ...mapGetters('search-options', ['detailedPokemon', 'getLinkForInUrlUpdate']),
     statChartData () {
       return !this.extraData
         ? {}

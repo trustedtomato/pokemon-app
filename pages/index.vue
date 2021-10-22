@@ -20,7 +20,7 @@
         :abilities="result.item.abilities"
         :height="result.item.height"
         :has-image="result.item.hasImage"
-        @click.native="pushInUrl({ 'show-details-of': result.item.id })"
+        @click.native="pushInUrlUpdate({ 'show-details-of': result.item.id })"
       />
     </div>
     <div v-else style="margin: 1em;">
@@ -47,13 +47,14 @@ export default Vue.extend({
     PokemonDetails
   },
   computed: {
-    ...mapState('search-options', ['limitOptions', 'inUrl']),
-    ...mapGetters('search-options', ['search', 'results', 'maxPage', 'pageChunks', 'queryString', 'getUpdateInUrlLink']),
+    ...mapState('search-options', ['inUrl']),
+    ...mapGetters('search-options', ['search', 'results', 'maxPage', 'queryString', 'getLinkForInUrlUpdate']),
     resultsOnPage () {
       return this.results.slice((this.inUrl.page - 1) * this.inUrl.limit, this.inUrl.page * this.inUrl.limit)
     }
   },
   watch: {
+    // Keep query string in sync with state updates.
     inUrl: {
       deep: true,
       handler () {
@@ -62,6 +63,7 @@ export default Vue.extend({
         }
       }
     },
+    // Keep state in sync with query string updates.
     '$route' (newRoute) {
       const newUrl = new URL(newRoute.fullPath, location.href)
       if (
@@ -76,19 +78,14 @@ export default Vue.extend({
   created () {
     // @ts-ignore
     this.fetchPokemons()
+    // Initalize state based on the query string.
     // @ts-ignore
     this.queryStringToState(location.search)
   },
   methods: {
     ...mapActions('search-options', ['fetchPokemons', 'queryStringToState', 'updateInUrl']),
-    pageClick (page: number) {
-      this.inUrl.page = page
-    },
-    pushInUrl (updated: any) {
-      this.$router.push(this.getUpdateInUrlLink({
-        ...this.inUrl,
-        ...updated
-      }))
+    pushInUrlUpdate (update: any) {
+      this.$router.push(this.getLinkForInUrlUpdate(update))
     }
   }
 })

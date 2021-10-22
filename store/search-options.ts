@@ -53,6 +53,7 @@ export default class SearchOptions extends VuexModule {
   pokemons: SimplePokemon[] = []
   limitOptions = [10, 20, 50]
   sortOptions = sortOptions
+  // This inUrl is always kept in sync with the page.
   inUrl = {
     query: '',
     limit: 20,
@@ -74,6 +75,8 @@ export default class SearchOptions extends VuexModule {
         })
         return (q: string) => (
           q === ''
+            // Fuse.js return an empty array on empty query.
+            // Let's return all the Pokemons instead.
             ? this.pokemons.map(item => ({ item }))
             : fuse.search(q)
         )
@@ -127,8 +130,8 @@ export default class SearchOptions extends VuexModule {
     return Math.ceil(this.results.length / this.inUrl.limit)
   }
 
-  get pageChunks () {
-    // The following chunks of pages must always be shown:
+  get pageButtonChunks () {
+    // The following chunks of page buttons must always be shown:
     const chunks = [
       // the first page
       { start: 1, end: 2 },
@@ -187,8 +190,8 @@ export default class SearchOptions extends VuexModule {
   }
 
   @Mutation
-  UPDATE_IN_URL (updated: any) {
-    Object.assign(this.inUrl, updated)
+  UPDATE_IN_URL (update: any) {
+    Object.assign(this.inUrl, update)
   }
 
   @Action({ commit: 'UPDATE_IN_URL', rawError: true })
@@ -196,7 +199,7 @@ export default class SearchOptions extends VuexModule {
     return updated
   }
 
-  get getUpdateInUrlLink () {
+  get getLinkForInUrlUpdate () {
     const url = this.inUrl
     return (updated: any) => '?' + objectToQueryString({
       ...url,

@@ -1,7 +1,9 @@
 <template>
   <button class="card">
     <div class="card__content">
-      <div class="card__image" :style="`background-image: url(${imageUrl || 'question-mark.svg'})`" />
+      <div class="card__image">
+        <img :src="`${imageUrl || '/question-mark.svg'}`" :alt="name">
+      </div>
     </div>
     <div class="card__content">
       <h1>{{ name }}</h1>
