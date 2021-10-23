@@ -2,13 +2,13 @@
   <div class="toolbar">
     <label>
       Number of results per page:
-      <select :value="inUrl.limit" @input="updateInUrl({ limit: $event.target.value })">
+      <select :value="inUrl.limit" @input="updateInUrl({ limit: Number($event.target.value), page: 1 })">
         <option v-for="option in limitOptions" :key="option" :value="option">{{ option }}</option>
       </select>
     </label>
     <label>
       Sort by:
-      <select :value="inUrl.sort" @input="updateInUrl({ sort: $event.target.value })">
+      <select :value="inUrl.sort" @input="updateInUrl({ sort: $event.target.value, page: 1 })">
         <option v-for="[key, displayedString] in Object.entries(sortOptions)" :key="key" :value="key">{{ displayedString }}</option>
       </select>
     </label>

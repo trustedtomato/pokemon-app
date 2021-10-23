@@ -6,6 +6,7 @@ import { objectToQueryString } from '@/utils/object-to-query-string'
 import { queryStringToObject } from '@/utils/query-string-to-object'
 import { range } from '@/utils/range'
 import { getPokemonListUrl } from '@/utils/urls'
+import { subtract } from '~/utils/difference'
 
 interface SimplePokemon {
   id: number
@@ -43,6 +44,14 @@ const createSearchBasedOnCompareFunc = (
       .sort(compare)
       .map(item => ({ item }))
 
+const defaultInUrl = {
+  query: '',
+  limit: 20,
+  page: 1,
+  sort: Object.keys(sortOptions)[0] as keyof typeof sortOptions,
+  'show-details-of': NaN
+}
+
 @Module({
   name: 'search-options',
   stateFactory: true,
@@ -55,13 +64,7 @@ export default class SearchOptions extends VuexModule {
   limitOptions = [10, 20, 50]
   sortOptions = sortOptions
   // This inUrl is always kept in sync with the page.
-  inUrl = {
-    query: '',
-    limit: 20,
-    page: 1,
-    sort: Object.keys(sortOptions)[0] as keyof typeof sortOptions,
-    'show-details-of': NaN
-  }
+  inUrl = { ...defaultInUrl }
 
   get detailedPokemon () {
     return this.pokemons
@@ -166,10 +169,10 @@ export default class SearchOptions extends VuexModule {
 
   @Mutation
   QUERY_STRING_TO_STATE (queryString: string) {
-    Object.assign(
-      this.inUrl,
-      queryStringToObject(queryString, this.inUrl)
-    )
+    this.inUrl = {
+      ...defaultInUrl,
+      ...queryStringToObject(queryString, this.inUrl)
+    }
   }
 
   @Action({ commit: 'QUERY_STRING_TO_STATE', rawError: true })
@@ -177,8 +180,17 @@ export default class SearchOptions extends VuexModule {
     return queryString
   }
 
-  get queryString () {
-    return objectToQueryString(this.inUrl)
+  get stateToQueryString () {
+    return (update?: unknown) => {
+      const query = objectToQueryString(
+        subtract(Object.assign({}, this.inUrl, update), defaultInUrl)
+      )
+      return !query ? '' : `?${query}`
+    }
+  }
+
+  get currentStateQueryString () {
+    return this.stateToQueryString()
   }
 
   @Mutation
@@ -189,13 +201,5 @@ export default class SearchOptions extends VuexModule {
   @Action({ commit: 'UPDATE_IN_URL', rawError: true })
   updateInUrl (updated: any) {
     return updated
-  }
-
-  get getLinkForInUrlUpdate () {
-    const url = this.inUrl
-    return (updated: any) => '?' + objectToQueryString({
-      ...url,
-      ...updated
-    })
   }
 }

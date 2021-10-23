@@ -72,7 +72,7 @@ export default Vue.extend({
     fetchCancelTokenSource: axios.CancelToken.source()
   }),
   computed: {
-    ...mapGetters('search-options', ['detailedPokemon', 'getLinkForInUrlUpdate']),
+    ...mapGetters('search-options', ['detailedPokemon', 'stateToQueryString']),
     imageUrl () {
       return getPokemonImageUrl(this.detailedPokemon)
     },
@@ -88,7 +88,7 @@ export default Vue.extend({
           }
     },
     linkToSearchPage () {
-      return this.getLinkForInUrlUpdate({
+      return this.stateToQueryString({
         'show-details-of': NaN
       })
     }
@@ -96,9 +96,15 @@ export default Vue.extend({
   watch: {
     detailedPokemon () {
       if (this.detailedPokemon) {
+        // Keep micromodal in sync with the state.
         MicroModal.show('pokemon-details-modal', {
           onClose: () => {
-            this.$router.push(this.linkToSearchPage as string)
+            // If the state was not changed already,
+            // change it. This happens when pressing
+            // the close button or the modal overlay.
+            if (this.detailedPokemon) {
+              this.$router.push(this.linkToSearchPage as string)
+            }
           },
           disableScroll: true,
           openClass: 'pokemon-details__container--open'
@@ -111,6 +117,9 @@ export default Vue.extend({
         }).then((res) => {
           this.extraData = res.data
         })
+      } else {
+        // Keep MicroModal in sync with the state.
+        MicroModal.close('pokemon-details-modal')
       }
     }
   }

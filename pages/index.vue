@@ -48,7 +48,7 @@ export default Vue.extend({
   }),
   computed: {
     ...mapState('search-options', ['inUrl']),
-    ...mapGetters('search-options', ['search', 'results', 'maxPage', 'queryString', 'getLinkForInUrlUpdate']),
+    ...mapGetters('search-options', ['search', 'results', 'maxPage', 'currentStateQueryString', 'stateToQueryString']),
     resultsOnPage () {
       return this.results.slice((this.inUrl.page - 1) * this.inUrl.limit, this.inUrl.page * this.inUrl.limit)
     }
@@ -58,8 +58,9 @@ export default Vue.extend({
     inUrl: {
       deep: true,
       handler () {
-        if (location.search !== '?' + this.queryString) {
-          this.$router.replace('?' + this.queryString)
+        if (location.search !== this.currentStateQueryString) {
+          console.log(location.search, this.currentStateQueryString)
+          this.$router.replace(this.currentStateQueryString)
         }
       }
     },
@@ -84,7 +85,7 @@ export default Vue.extend({
   methods: {
     ...mapActions('search-options', ['fetchPokemons', 'queryStringToState', 'updateInUrl']),
     pushInUrlUpdate (update: any) {
-      this.$router.push(this.getLinkForInUrlUpdate(update))
+      this.$router.push(this.stateToQueryString(update))
     }
   }
 })
