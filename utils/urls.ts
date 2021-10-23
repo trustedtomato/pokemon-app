@@ -4,7 +4,7 @@ import { SimplePokemon } from '@/types/SimplePokemon'
 // Axios doesn't seem to care about the <base />,
 // so it has to be set separately.
 // @ts-ignore
-axios.defaults.baseURL = __NUXT__.config.base
+axios.defaults.baseURL = (global || window)?.__NUXT__?.config.base || ''
 
 /**
  * Turns "generated/x.png" to "/basename/generated/x.png".
