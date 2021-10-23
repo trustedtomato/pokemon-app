@@ -2,7 +2,7 @@
 Search for your favorite Pokemon!
 
 ## Live demo
-See demo here: [trustedtomato.github.io/pokemon-app/](trustedtomato.github.io/pokemon-app/)
+See demo here: [trustedtomato.github.io/pokemon-app/](https://trustedtomato.github.io/pokemon-app/)
 
 ## Build Setup
 
