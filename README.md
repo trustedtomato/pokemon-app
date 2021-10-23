@@ -1,6 +1,9 @@
 # Pokemon app
 Search for your favorite Pokemon!
 
+## Live demo
+See demo here: [trustedtomato.github.io/pokemon-app/](trustedtomato.github.io/pokemon-app/)
+
 ## Build Setup
 
 ```bash
@@ -25,4 +28,3 @@ For detailed explanation on how things work, check out [Nuxt's documentation](ht
 - [ ] add unit tests for everything (reach 100% coverage)
 - [ ] display even more things on the Pokemon modal
 - [ ] add fade-in and fade-out transition to modal dialog
-- [ ] publish to GitHub Pages with a GitHub Action
