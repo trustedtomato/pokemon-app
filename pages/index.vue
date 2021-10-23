@@ -6,7 +6,7 @@
         :value="inUrl.query"
         class="main-search__input"
         type="search"
-        @input="updateInUrl({ query: $event.target.value, page: 1 })"
+        @input="updateSearchQuery($event.target.value)"
       >
     </label>
     <Toolbar />
@@ -38,6 +38,7 @@ import PokemonCard from '@/components/PokemonCard.vue'
 import Toolbar from '~/components/Toolbar.vue'
 import SearchIcon from '~/components/SearchIcon.vue'
 import PokemonDetails from '~/components/PokemonDetails.vue'
+import { debounce } from '~/utils/debounce'
 
 export default Vue.extend({
   components: {
@@ -46,6 +47,10 @@ export default Vue.extend({
     SearchIcon,
     PokemonDetails
   },
+  data: () => ({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    updateSearchQuery: (q: string) => {}
+  }),
   computed: {
     ...mapState('search-options', ['inUrl']),
     ...mapGetters('search-options', ['search', 'results', 'maxPage', 'queryString', 'getLinkForInUrlUpdate']),
@@ -81,6 +86,10 @@ export default Vue.extend({
     // Initalize state based on the query string.
     // @ts-ignore
     this.queryStringToState(location.search)
+    this.updateSearchQuery = debounce(50, (query) => {
+      // @ts-ignore
+      this.updateInUrl({ query, page: 1 })
+    })
   },
   methods: {
     ...mapActions('search-options', ['fetchPokemons', 'queryStringToState', 'updateInUrl']),
