@@ -24,3 +24,4 @@ For detailed explanation on how things work, check out [Nuxt's documentation](ht
 - [ ] limit number of characters in search when using fuzzy-search because its performance cost increases when the number of characters increase 
 - [ ] add unit tests for everything (reach 100% coverage)
 - [ ] display even more things on the Pokemon modal
+- [ ] add fade-in and fade-out transition to modal dialog
