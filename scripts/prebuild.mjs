@@ -24,6 +24,7 @@ const extraDir = join(targetFileDir, 'pokemon-extra')
 
 await mkdirp(targetFileDir)
 await mkdirp(imageDir)
+await mkdirp(extraDir)
 
 console.log('Generating pokemon list...')
 
