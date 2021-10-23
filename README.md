@@ -18,7 +18,7 @@ $ npm run start
 $ npm run generate
 ```
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+For detailed explanation on how things work, check out [Nuxt's documentation](https://nuxtjs.org).
 
 ## TODO
 - [ ] limit number of characters in search when using fuzzy-search because its performance cost increases when the number of characters increase 
