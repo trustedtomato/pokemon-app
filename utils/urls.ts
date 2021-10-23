@@ -1,10 +1,4 @@
-import axios from 'axios'
 import { SimplePokemon } from '@/types/SimplePokemon'
-
-// Axios doesn't seem to care about the <base />,
-// so it has to be set separately.
-// @ts-ignore
-axios.defaults.baseURL = (global || window)?.__NUXT__?.config.base || ''
 
 /**
  * Turns "generated/x.png" to "/basename/generated/x.png".
@@ -12,7 +6,9 @@ axios.defaults.baseURL = (global || window)?.__NUXT__?.config.base || ''
  * on the page by Nuxt instead.
  **/
 export function getUrl (url: string) {
-  return `/${url}`
+  // @ts-ignore
+  const base = (global || window)?.__NUXT__.config.base || ''
+  return `/${base}${url}`
 }
 
 export function getPokemonListUrl () {

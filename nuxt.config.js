@@ -1,13 +1,14 @@
-const baseUrl = process.env.BASE || ''
-console.log('Using base URL: ' + baseUrl)
+// Base should be "" or something like "dist/"
+const base = process.env.BASE || ''
+console.log('Using base URL: ' + base)
 
 export default {
   router: {
-    base: baseUrl
+    base: base && `/${base}`
   },
 
   publicRuntimeConfig: {
-    base: baseUrl
+    base
   },
 
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -29,7 +30,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/pokeball.svg' }
+      { rel: 'icon', type: 'image/x-icon', href: `/${base}pokeball.svg` }
     ]
   },
 
