@@ -7,7 +7,7 @@ import { SimplePokemon } from '@/types/SimplePokemon'
  **/
 export function getUrl (url: string) {
   // @ts-ignore
-  const base = (global || window)?.__NUXT__.config.base || ''
+  const base = (global || window)?.__NUXT__?.config.base || ''
   return `/${base}${url}`
 }
 
