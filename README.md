@@ -21,6 +21,6 @@ $ npm run generate
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
 ## TODO
-- [ ] debounce search input
+- [ ] limit number of characters in search when using fuzzy-search because its performance cost increases when the number of characters increase 
 - [ ] add unit tests for everything (reach 100% coverage)
 - [ ] display even more things on the Pokemon modal
