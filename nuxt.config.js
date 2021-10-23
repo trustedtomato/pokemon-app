@@ -1,4 +1,15 @@
+const baseUrl = process.env.BASE || ''
+console.log('Using base URL: ' + baseUrl)
+
 export default {
+  router: {
+    base: baseUrl
+  },
+
+  publicRuntimeConfig: {
+    base: baseUrl
+  },
+
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 

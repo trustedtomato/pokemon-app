@@ -14,12 +14,7 @@
       <PokemonCard
         v-for="result in resultsOnPage"
         :key="result.item.id"
-        :pokemon-id="result.item.id"
-        :name="result.item.name"
-        :weight="result.item.weight"
-        :abilities="result.item.abilities"
-        :height="result.item.height"
-        :has-image="result.item.hasImage"
+        :pokemon="result.item"
         @click.native="pushInUrlUpdate({ 'show-details-of': result.item.id })"
       />
     </div>
@@ -71,13 +66,8 @@ export default Vue.extend({
     // Keep state in sync with query string updates.
     '$route' (newRoute) {
       const newUrl = new URL(newRoute.fullPath, location.href)
-      if (
-        newUrl.origin === location.origin &&
-        newUrl.pathname === location.pathname
-      ) {
-        // @ts-ignore
-        this.queryStringToState(newUrl.search)
-      }
+      // @ts-ignore
+      this.queryStringToState(newUrl.search)
     }
   },
   created () {

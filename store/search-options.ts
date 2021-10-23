@@ -5,6 +5,7 @@ import { store } from '.'
 import { objectToQueryString } from '@/utils/object-to-query-string'
 import { queryStringToObject } from '@/utils/query-string-to-object'
 import { range } from '@/utils/range'
+import { getPokemonListUrl } from '@/utils/urls'
 
 interface SimplePokemon {
   id: number
@@ -156,7 +157,7 @@ export default class SearchOptions extends VuexModule {
 
   @MutationAction({ mutate: ['pokemons'] })
   async fetchPokemons () {
-    const res = await axios.get('/generated/pokemons.json') as any
+    const res = await axios.get(getPokemonListUrl()) as any
     const pokemons: SimplePokemon[] = res.data
     return {
       pokemons

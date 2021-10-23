@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "prebuild": "node prebuild/generate-pokemon-list.mjs",
+    "prebuild": "./scripts/prebuild.mjs",
     "dev": "npm run prebuild && nuxt",
-    "build": "npm run prebuild && nuxt build",
-    "start": "npm run prebuild && nuxt start",
+    "start": "nuxt start",
     "generate": "npm run prebuild && nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",

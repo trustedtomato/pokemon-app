@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
 

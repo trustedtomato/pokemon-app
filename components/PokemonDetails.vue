@@ -14,7 +14,7 @@
       <div class="pokemon-details__data">
         <div class="pokemon-details__image">
           <img
-            :src="detailedPokemon.hasImage ? `/generated/pokemon-images/${detailedPokemon.id}.png` : '/question-mark.svg'"
+            :src="imageUrl"
             :alt="detailedPokemon.name"
           >
         </div>
@@ -61,6 +61,7 @@ import axios from 'axios'
 import { mapGetters } from 'vuex'
 import MicroModal from 'micromodal'
 import Chart from './Chart'
+import { getPokemonImageUrl, getPokemonExtraUrl } from '@/utils/urls'
 
 export default Vue.extend({
   components: {
@@ -72,6 +73,9 @@ export default Vue.extend({
   }),
   computed: {
     ...mapGetters('search-options', ['detailedPokemon', 'getLinkForInUrlUpdate']),
+    imageUrl () {
+      return getPokemonImageUrl(this.detailedPokemon)
+    },
     statChartData () {
       return !this.extraData
         ? {}
@@ -102,7 +106,7 @@ export default Vue.extend({
         this.extraData = null
         this.fetchCancelTokenSource.cancel()
         this.fetchCancelTokenSource = axios.CancelToken.source()
-        axios.get(`/generated/pokemon-extra/${this.detailedPokemon.id}.json`, {
+        axios.get(getPokemonExtraUrl(this.detailedPokemon), {
           cancelToken: this.fetchCancelTokenSource.token
         }).then((res) => {
           this.extraData = res.data

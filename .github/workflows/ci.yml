@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - main
-      - master
   pull_request:
     branches:
       - main
-      - master
 
 jobs:
   ci:
@@ -45,3 +43,22 @@ jobs:
 
       - name: Run tests 🧪
         run: npm run test
+
+  deploy:
+    needs: [ci]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'pull_request'
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Node.js 16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+    - name: Build project
+      run: BASE=/pokemon-app/ npm run generate
+    - name: Deploy website
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist/
