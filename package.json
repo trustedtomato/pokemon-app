@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "prebuild": "./scripts/prebuild.mjs",
+    "prebuild": "node ./scripts/prebuild.mjs",
     "dev": "npm run prebuild && nuxt",
     "start": "nuxt start",
     "generate": "npm run prebuild && nuxt generate",
